@@ -15,24 +15,25 @@ type StatusColumnPropsTypes = {
 
 const StatusColumn: React.FC<StatusColumnPropsTypes> = ({ statusName }) => {
   const [tasks, setTasks] = useState<ITask[] | []>([]);
+  const [newStatusName] = useState<string>(
+    statusName
+      .split(/(?=[A-ZА-Я])/)
+      .join(" ")
+      .toLowerCase());
   const assignee = useContext(AssigneeContext);
-  const newStatusName = statusName
-    .split(/(?=[A-ZА-Я])/)
-    .join(" ")
-    .toLowerCase();
+  const allTasks = getAllTasks();
+  const assigneeTasks = getAssigneeToTasks(assignee);
 
   useEffect(() => {
-      if (assignee === "All") {
-        const res = getStatusFilteredTasks(getAllTasks(), newStatusName);
-        setTasks(res);
-      } else {
-        const res = getStatusFilteredTasks(
-          getAssigneeToTasks(assignee),
-          newStatusName
-        );
-        setTasks(res);
-      }
+    if (assignee === "All") {
+      const res = getStatusFilteredTasks(allTasks, newStatusName);
+      setTasks(res);
+    } else {
+      const res = getStatusFilteredTasks(assigneeTasks, newStatusName);
+      setTasks(res);
+    }
   }, [assignee]);
+
   return (
     <div className="status-column">
       <div className="status-column-title">

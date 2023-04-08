@@ -4,9 +4,7 @@ import { FaGithub } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import FooterSocialButton from "./FooterSocialButton";
 
-type FooterPropsTypes = {};
-
-const Footer: React.FC<FooterPropsTypes> = () => {
+const Footer: React.FC = () => {
   return (
     <div className="footer">
       Test task from Anton Basaliuk

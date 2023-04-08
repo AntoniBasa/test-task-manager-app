@@ -6,6 +6,7 @@ import { getAllTasks } from "../../api/getData";
 const Tabs: React.FC = () => {
   const analytic = useContext(AnalyticContext);
   const [tabs, setTabs] = useState<[string, number][] | undefined>();
+  const allTasks = getAllTasks();
 
   useEffect(() => {
     if (analytic) {
@@ -15,9 +16,9 @@ const Tabs: React.FC = () => {
 
   return (
     <div className="tabs">
-      <TabButton name="All" count={getAllTasks().length} />
-      {tabs?.map((tab, idx) => (
-        <TabButton key={idx} name={tab[0]} count={tab[1]} />
+      <TabButton name="All" count={allTasks.length} />
+      {tabs?.map(([tabName, count], idx) => (
+        <TabButton key={idx} name={tabName} count={count} />
       ))}
     </div>
   );

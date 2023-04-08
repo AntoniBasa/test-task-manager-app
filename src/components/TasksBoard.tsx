@@ -14,8 +14,8 @@ const TasksBoard: React.FC = () => {
 
   return (
     <div className="board">
-      {statuses?.map((status, idx) => (
-        <StatusColumn key={idx} statusName={status[0]}/>
+      {statuses?.map(([statusName], idx) => (
+        <StatusColumn key={idx} statusName={statusName}/>
       ))}
     </div>
   );
