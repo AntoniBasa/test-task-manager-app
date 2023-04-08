@@ -85,7 +85,10 @@ export const getAnalytics = () => {
   };
 
   return tasks.reduce((acc: IAnalytics, task) => {
-    const newAnalytics = Object.assign({}, acc);
+    let taskStatus = { ...acc.taskStatus };
+    let assigneeStats = { ...acc.assigneeStats };
+    let dueDateStats = { ...acc.dueDateStats };
+
     if (task.status.includes(" ")) {
       let modifiedStatusName = task.status
         .split(" ")
@@ -93,21 +96,33 @@ export const getAnalytics = () => {
           index === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1)
         )
         .join("");
-      if (newAnalytics.taskStatus[modifiedStatusName]) {
-        newAnalytics.taskStatus[modifiedStatusName]++;
+      if (taskStatus[modifiedStatusName]) {
+        taskStatus = Object.assign({}, taskStatus, {
+          [modifiedStatusName]: taskStatus[modifiedStatusName] + 1,
+        });
       } else {
-        newAnalytics.taskStatus[modifiedStatusName] = 1;
+        taskStatus = Object.assign({}, taskStatus, {
+          [modifiedStatusName]: 1,
+        });
       }
-    } else if (newAnalytics.taskStatus[task.status]) {
-      newAnalytics.taskStatus[task.status]++;
+    } else if (taskStatus[task.status]) {
+      taskStatus = Object.assign({}, taskStatus, {
+        [task.status]: taskStatus[task.status] + 1,
+      });
     } else {
-      newAnalytics.taskStatus[task.status] = 1;
+      taskStatus = Object.assign({}, taskStatus, {
+        [task.status]: 1,
+      });
     }
 
-    if (newAnalytics.assigneeStats[task.assignee]) {
-      newAnalytics.assigneeStats[task.assignee]++;
+    if (assigneeStats[task.assignee]) {
+      assigneeStats = Object.assign({}, assigneeStats, {
+        [task.assignee]: assigneeStats[task.assignee] + 1,
+      });
     } else {
-      newAnalytics.assigneeStats[task.assignee] = 1;
+      assigneeStats = Object.assign({}, assigneeStats, {
+        [task.assignee]: 1,
+      });
     }
 
     const janFirst = new Date(task.dueDate.getFullYear(), 0, 1);
@@ -117,13 +132,21 @@ export const getAnalytics = () => {
     );
     const week = Math.ceil((janFirst.getDay() + 1 + diffDays) / 7);
 
-    if (newAnalytics.dueDateStats[`week${week}`]) {
-      newAnalytics.dueDateStats[`week${week}`]++;
+    if (dueDateStats[`week${week}`]) {
+      dueDateStats = Object.assign({}, dueDateStats, {
+        [`week${week}`]: dueDateStats[`week${week}`] + 1,
+      });
     } else {
-      newAnalytics.dueDateStats[`week${week}`] = 1;
+      dueDateStats = Object.assign({}, dueDateStats, {
+        [`week${week}`]: 1,
+      });
     }
 
-    return newAnalytics;
+    return Object.assign({}, acc, {
+      taskStatus,
+      assigneeStats,
+      dueDateStats,
+    });
   }, initialAnalytics);
 };
 
