@@ -1,0 +1,28 @@
+.board {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50px;
+  .status-column {
+    width: 30%;
+    
+    &-tasks-wrapper{
+        max-height: 70vh;
+        overflow-y: scroll;
+    }
+    &-title {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+      span {
+        color: #c7c7c7;
+        font-size: 12px;
+      }
+      &-icon{
+        font-size: 20px;
+        color: #c7c7c7;
+      }
+    }
+  }
+}

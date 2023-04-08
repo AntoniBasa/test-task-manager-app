@@ -1,0 +1,44 @@
+.header {
+  width: 100%;
+  background-color: #ebedf2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &-content {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .tabs{
+        display: flex;
+        .tab {
+            width: 90px;
+            height: 40px;
+            margin-left: 10px;
+            background-color: white;
+            color: black;
+            padding: 5px;
+            box-sizing: border-box;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            font-weight: 600;
+            cursor: pointer;
+            &-count {
+              font-size: 12px;
+              font-weight: 300;
+              color: #c7c7c7;
+            }
+          }
+          .active {
+            background-color: #ff7a50;
+            color: white;
+            .tab-count {
+              color: #f4f6f7;
+            }
+          }
+    }
+    
+  }
+}
